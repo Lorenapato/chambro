@@ -1,0 +1,18 @@
+#!/bin/bash
+#cree un usuarios de linux con un grupo especifico
+read -p "Ingrese el nombre del usuario: " nombre
+read -p "cantidad" cantidad
+read -p "Ingrese el nombre del grupo: " grupo
+#crear el grupo
+sudo groupadd $grupo
+#crear los usuarios
+for ((i=1; i<=$cantidad; i++)) do
+    sudo useradd -m -d /home/$nombre$i -s /bin/bash -g $grupo $nombre$i
+    echo "usuario $nombre$i creado"
+    read -p "Ingrese la contraseña del usuario $nombre$i: " pass
+    if [[ $pass == "" ]]; then
+        passwd "1234"
+    else
+        passwd $pass
+    fi
+done
